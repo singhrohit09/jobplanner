@@ -1,0 +1,879 @@
+{
+  "schemaVersion": "1.0",
+  "entities": {
+    "UserProfile": {
+      "path": "users/{userId}",
+      "description": "User profile, onboarding data, career readiness, skills, roadmap, resume, and mock interview history.",
+      "fields": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth user UID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth user UID"
+        },
+        "fullName": {
+          "type": "string",
+          "description": "User full legal/preferred name"
+        },
+        "email": {
+          "type": "string",
+          "description": "User verified contact email address"
+        },
+        "phone": {
+          "type": "string",
+          "description": "User phone number with country code"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Public profile avatar URL"
+        },
+        "college": {
+          "type": "string",
+          "description": "College / University institution name"
+        },
+        "degree": {
+          "type": "string",
+          "description": "Degree program (e.g. B.Tech, BCA, MCA, M.Tech)"
+        },
+        "branch": {
+          "type": "string",
+          "description": "Academic branch / specialization (e.g. CSE, IT, AI/ML)"
+        },
+        "currentYear": {
+          "type": "string",
+          "description": "Current semester or academic year"
+        },
+        "graduationYear": {
+          "type": "string",
+          "description": "Expected or completed graduation year"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target career job role"
+        },
+        "industry": {
+          "type": "string",
+          "description": "Preferred industry sector"
+        },
+        "experienceLevel": {
+          "type": "string",
+          "description": "Experience tier (Fresher, Student, Junior, etc.)"
+        },
+        "skills": {
+          "type": "list",
+          "description": "Selected technical and professional skills"
+        },
+        "location": {
+          "type": "string",
+          "description": "Preferred work location or mode (e.g. Remote, Bengaluru)"
+        },
+        "linkedin": {
+          "type": "string",
+          "description": "Verified LinkedIn profile URL"
+        },
+        "github": {
+          "type": "string",
+          "description": "Verified GitHub profile URL"
+        },
+        "profileCompleted": {
+          "type": "boolean",
+          "description": "Indicates whether the user has completed onboarding"
+        },
+        "resumeURL": {
+          "type": "string",
+          "description": "Firebase Storage download URL for the user's uploaded resume (PDF or DOCX)"
+        },
+        "resumeFileName": {
+          "type": "string",
+          "description": "Original file name of the uploaded resume"
+        },
+        "resumeStoragePath": {
+          "type": "string",
+          "description": "Firebase Storage object path under resumes/{uid}/"
+        },
+        "resumeFileType": {
+          "type": "string",
+          "description": "MIME type of the uploaded resume (e.g. application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document)"
+        },
+        "resumeFileSize": {
+          "type": "number",
+          "description": "Size in bytes of the uploaded resume file (max 10MB)"
+        },
+        "resumeUploadedAt": {
+          "type": "string",
+          "description": "Timestamp when the resume was uploaded to Firebase Storage"
+        },
+        "overallScore": {
+          "type": "number",
+          "description": "Overall career readiness score (0-100)"
+        },
+        "profile": {
+          "type": "map",
+          "description": "Full user profile details and education"
+        },
+        "readiness": {
+          "type": "map",
+          "description": "Skill gap analysis and score breakdown"
+        },
+        "roadmap": {
+          "type": "list",
+          "description": "Personalized career roadmap steps and tasks"
+        },
+        "resume": {
+          "type": "map",
+          "description": "ATS-friendly resume builder content"
+        },
+        "practiceHistory": {
+          "type": "list",
+          "description": "AI mock interview records and evaluations"
+        },
+        "subscriptionPlan": {
+          "type": "string",
+          "description": "Membership tier"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp of document creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Server timestamp of last update"
+        }
+      }
+    },
+    "SkillGapAnalysis": {
+      "path": "users/{userId}/skillGapAnalysis/{analysisId}",
+      "description": "User's AI skill gap analysis results comparing current skills and resume against target job role.",
+      "fields": {
+        "readinessScore": {
+          "type": "number",
+          "description": "Overall skill readiness score (0-100)"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target job role analyzed"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Executive summary of readiness and key gap insights"
+        },
+        "scoreExplanation": {
+          "type": "string",
+          "description": "Short explanation of why this readiness score was generated"
+        },
+        "strongSkills": {
+          "type": "list",
+          "description": "Skills clearly demonstrated by user and resume"
+        },
+        "improvementSkills": {
+          "type": "list",
+          "description": "Skills with partial evidence requiring deeper mastery"
+        },
+        "missingSkills": {
+          "type": "list",
+          "description": "Important missing skills required for target role"
+        },
+        "recommendedSkills": {
+          "type": "list",
+          "description": "Optional/nice-to-have skills for extra competitiveness"
+        },
+        "learningRoadmap": {
+          "type": "list",
+          "description": "Personalized stages to bridge skill gaps"
+        },
+        "projectRecommendations": {
+          "type": "list",
+          "description": "Recommended projects targeting primary skill gaps"
+        },
+        "resumeUsed": {
+          "type": "map",
+          "description": "Metadata of the resume used in this analysis"
+        },
+        "analyzedAt": {
+          "type": "string",
+          "description": "Timestamp when analysis was generated"
+        }
+      }
+    },
+    "JobRecommendations": {
+      "path": "users/{userId}/jobRecommendations/latest",
+      "description": "Personalized AI job recommendations and dynamic match scores for the user",
+      "fields": {
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target role for which jobs were recommended"
+        },
+        "generatedAt": {
+          "type": "string",
+          "description": "ISO timestamp when recommendations were generated"
+        },
+        "isDemo": {
+          "type": "boolean",
+          "description": "Flag indicating if recommendations use demo fallback data or real API"
+        },
+        "jobs": {
+          "type": "list",
+          "description": "List of recommended job objects with match scores, matching skills, missing skills, and improvement tips"
+        }
+      }
+    },
+    "SavedJob": {
+      "path": "users/{userId}/savedJobs/{jobId}",
+      "description": "Bookmarked/saved jobs for the user",
+      "fields": {
+        "jobId": {
+          "type": "string",
+          "description": "Unique identifier of the saved job"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Job title"
+        },
+        "company": {
+          "type": "string",
+          "description": "Hiring company name"
+        },
+        "location": {
+          "type": "string",
+          "description": "Job location"
+        },
+        "workMode": {
+          "type": "string",
+          "description": "Remote, Hybrid, or On-site"
+        },
+        "salary": {
+          "type": "string",
+          "description": "Salary / compensation range"
+        },
+        "experience": {
+          "type": "string",
+          "description": "Experience level required"
+        },
+        "matchScore": {
+          "type": "number",
+          "description": "Calculated match percentage (0-100)"
+        },
+        "applyUrl": {
+          "type": "string",
+          "description": "External application URL or demo marker"
+        },
+        "isDemo": {
+          "type": "boolean",
+          "description": "Whether this is a demo listing or real job"
+        },
+        "savedAt": {
+          "type": "string",
+          "description": "Timestamp when the job was bookmarked"
+        }
+      }
+    },
+    "GeneratedResume": {
+      "path": "users/{userId}/generatedResumes/{resumeId}",
+      "description": "Phase 5 AI-generated ATS resumes created and managed by the candidate",
+      "fields": {
+        "id": {
+          "type": "string",
+          "description": "Resume unique identifier"
+        },
+        "resumeId": {
+          "type": "string",
+          "description": "Resume unique identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the candidate owner"
+        },
+        "title": {
+          "type": "string",
+          "description": "Custom user title (e.g. Software Developer Resume)"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target job title for ATS alignment"
+        },
+        "template": {
+          "type": "string",
+          "description": "Template archetype: classic, modern, minimal"
+        },
+        "personalInfo": {
+          "type": "object",
+          "description": "Full name, contact email, phone, location, links"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Concise, tailored, ATS-friendly professional summary"
+        },
+        "skills": {
+          "type": "array",
+          "description": "List of validated technical and domain skills"
+        },
+        "education": {
+          "type": "array",
+          "description": "Candidate academic credentials and degrees"
+        },
+        "projects": {
+          "type": "array",
+          "description": "Portfolio projects with bullet points, tech stack, and links"
+        },
+        "experience": {
+          "type": "array",
+          "description": "Work experiences or internships with impact bullets"
+        },
+        "certifications": {
+          "type": "array",
+          "description": "Professional credentials and awards"
+        },
+        "achievements": {
+          "type": "array",
+          "description": "Honors and notable accomplishments"
+        },
+        "links": {
+          "type": "object",
+          "description": "Professional web presence URLs"
+        },
+        "atsScore": {
+          "type": "number",
+          "description": "Calculated ATS readiness rating (0-100)"
+        },
+        "atsFeedback": {
+          "type": "object",
+          "description": "ATS strengths, suggestions, and missing keywords"
+        },
+        "tailoredForJob": {
+          "type": "object",
+          "description": "Metadata if customized for a specific opportunity"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation ISO timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update ISO timestamp"
+        }
+      }
+    },
+    "InterviewSession": {
+      "path": "users/{userId}/interviewSessions/{sessionId}",
+      "description": "Phase 6 AI interview sessions, questions, evaluations, and comprehensive performance reports",
+      "fields": {
+        "sessionId": {
+          "type": "string",
+          "description": "Unique interview session identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "interviewType": {
+          "type": "string",
+          "description": "Type: mock, technical, behavioral, resume, job_specific, skill_gap"
+        },
+        "difficulty": {
+          "type": "string",
+          "description": "Difficulty: beginner, intermediate, advanced"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target job title for the interview"
+        },
+        "jobId": {
+          "type": "string",
+          "description": "Optional ID of the target job if job-specific interview"
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "Optional title of target company job"
+        },
+        "company": {
+          "type": "string",
+          "description": "Optional hiring company name"
+        },
+        "totalQuestions": {
+          "type": "number",
+          "description": "Total number of questions in this session"
+        },
+        "completedQuestions": {
+          "type": "number",
+          "description": "Number of questions completed"
+        },
+        "overallScore": {
+          "type": "number",
+          "description": "Overall interview performance score (0-100)"
+        },
+        "technicalScore": {
+          "type": "number",
+          "description": "Technical competency score (0-100)"
+        },
+        "behavioralScore": {
+          "type": "number",
+          "description": "HR and behavioral score (0-100)"
+        },
+        "resumeScore": {
+          "type": "number",
+          "description": "Resume knowledge score (0-100)"
+        },
+        "roleReadinessScore": {
+          "type": "number",
+          "description": "Role readiness rating (0-100)"
+        },
+        "strengths": {
+          "type": "array",
+          "description": "Key verified strengths from interview"
+        },
+        "weaknesses": {
+          "type": "array",
+          "description": "Primary areas needing improvement"
+        },
+        "recommendations": {
+          "type": "array",
+          "description": "Recommended study topics and action steps"
+        },
+        "questions": {
+          "type": "array",
+          "description": "List of question records with user answers, evaluations, and scores"
+        },
+        "startedAt": {
+          "type": "string",
+          "description": "ISO start timestamp"
+        },
+        "completedAt": {
+          "type": "string",
+          "description": "ISO completion timestamp"
+        },
+        "status": {
+          "type": "string",
+          "description": "completed, abandoned, or in_progress"
+        }
+      }
+    },
+    "CareerAssistantSession": {
+      "path": "users/{userId}/careerAssistantSessions/{sessionId}",
+      "description": "Personalized career assistant conversation history, containing messages, recommendations, and context memory.",
+      "fields": {
+        "sessionId": {
+          "type": "string",
+          "description": "Unique session identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the session owner"
+        },
+        "title": {
+          "type": "string",
+          "description": "Conversation topic title"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO last update timestamp"
+        },
+        "messages": {
+          "type": "array",
+          "description": "Array of chat messages containing id, role (user or assistant), content, timestamp, recommendations, nextSteps, and relatedFeatures"
+        }
+      }
+    },
+    "CareerRoadmap": {
+      "path": "users/{userId}/careerRoadmap/current",
+      "description": "Active AI Career Roadmap and personal progress tracking record with stages, tasks, milestones, and achievements.",
+      "fields": {
+        "roadmapId": {
+          "type": "string",
+          "description": "Unique roadmap identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the candidate owner"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target job title for the roadmap"
+        },
+        "industry": {
+          "type": "string",
+          "description": "Target industry category"
+        },
+        "duration": {
+          "type": "string",
+          "description": "Timeline duration (e.g. 2 Weeks, 1 Month, 3 Months, 6 Months, Custom)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO last update timestamp"
+        },
+        "overallProgress": {
+          "type": "number",
+          "description": "Calculated completion percentage (0-100)"
+        },
+        "currentStage": {
+          "type": "string",
+          "description": "Title of the active stage"
+        },
+        "completedTasksCount": {
+          "type": "number",
+          "description": "Number of completed tasks across all stages"
+        },
+        "totalTasksCount": {
+          "type": "number",
+          "description": "Total number of tasks across all stages"
+        },
+        "stages": {
+          "type": "array",
+          "description": "Ordered stages containing individual career tasks with status, priority, and reasons"
+        },
+        "milestones": {
+          "type": "array",
+          "description": "High-level career journey milestones"
+        },
+        "achievements": {
+          "type": "array",
+          "description": "Lightweight achievements unlocked by user actions"
+        },
+        "skillProgressList": {
+          "type": "array",
+          "description": "Skills with progress percentages and target mastery levels"
+        },
+        "projectRecommendations": {
+          "type": "array",
+          "description": "Practical hands-on projects tailored to the target role"
+        }
+      }
+    },
+    "CareerRoadmapHistory": {
+      "path": "users/{userId}/careerRoadmap/history/{roadmapId}",
+      "description": "Historical snapshots of regenerated career roadmaps.",
+      "fields": {
+        "roadmapId": {
+          "type": "string",
+          "description": "Identifier of the archived roadmap snapshot"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target role at time of archive"
+        },
+        "duration": {
+          "type": "string",
+          "description": "Selected duration"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Original creation date"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Archive timestamp"
+        },
+        "overallProgress": {
+          "type": "number",
+          "description": "Progress score at time of archive"
+        },
+        "completedTasksCount": {
+          "type": "number",
+          "description": "Completed tasks count at time of archive"
+        },
+        "totalTasksCount": {
+          "type": "number",
+          "description": "Total tasks count at time of archive"
+        },
+        "stagesSummary": {
+          "type": "array",
+          "description": "Summary of stages and progress scores"
+        },
+        "roadmapSnapshot": {
+          "type": "object",
+          "description": "Full roadmap JSON snapshot"
+        }
+      }
+    },
+    "CareerAnalytics": {
+      "path": "users/{userId}/careerAnalytics/current",
+      "description": "Consolidated career analytics, readiness score breakdown, skill trends, job match data, interview performance, and AI-driven career insights.",
+      "fields": {
+        "id": {
+          "type": "string",
+          "description": "Analytics document identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target role at time of analytics calculation"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Snapshot creation ISO timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Snapshot last updated ISO timestamp"
+        },
+        "readiness": {
+          "type": "object",
+          "description": "Detailed multi-component career readiness score"
+        },
+        "skills": {
+          "type": "object",
+          "description": "Aggregated skills, improving skills, and priority gaps"
+        },
+        "jobs": {
+          "type": "object",
+          "description": "Job match averages, best match, and top missing skills"
+        },
+        "resume": {
+          "type": "object",
+          "description": "Resume ATS score, versions, and improvement areas"
+        },
+        "interview": {
+          "type": "object",
+          "description": "Interview session averages, best scores, and trends"
+        },
+        "roadmap": {
+          "type": "object",
+          "description": "Roadmap task progress, velocity, and stages"
+        },
+        "insights": {
+          "type": "object",
+          "description": "AI-generated strengths, risks, weekly insight, and next best action"
+        },
+        "activities": {
+          "type": "array",
+          "description": "List of recent authenticated user career actions"
+        }
+      }
+    },
+    "CareerAnalyticsHistory": {
+      "path": "users/{userId}/careerAnalytics/history/{snapshotId}",
+      "description": "Historical snapshots of career analytics scores for progress tracking over time.",
+      "fields": {
+        "snapshotId": {
+          "type": "string",
+          "description": "Identifier of the historical analytics snapshot"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Snapshot ISO timestamp"
+        },
+        "overallReadiness": {
+          "type": "number",
+          "description": "Overall career readiness score at time of capture"
+        },
+        "targetRole": {
+          "type": "string",
+          "description": "Target role at time of snapshot"
+        },
+        "snapshot": {
+          "type": "object",
+          "description": "Partial or full analytics snapshot JSON"
+        }
+      }
+    },
+    "JobApplication": {
+      "path": "users/{userId}/jobApplications/{applicationId}",
+      "description": "User tracked job applications, status timeline, notes, contact, dates, and AI guidance.",
+      "fields": {
+        "applicationId": {
+          "type": "string",
+          "description": "Unique identifier of the application"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "company": {
+          "type": "string",
+          "description": "Hiring company or organization name"
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "Position / Job title applied for"
+        },
+        "jobUrl": {
+          "type": "string",
+          "description": "Link to the external job posting or application portal"
+        },
+        "location": {
+          "type": "string",
+          "description": "Job office location or city"
+        },
+        "workMode": {
+          "type": "string",
+          "description": "Work style: Remote, Hybrid, or Onsite"
+        },
+        "industry": {
+          "type": "string",
+          "description": "Industry domain of the job"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current stage in the application pipeline (Saved, Applied, Screening, Assessment, Interview, Final Interview, Offer, Accepted, Rejected, Withdrawn)"
+        },
+        "applicationDate": {
+          "type": "string",
+          "description": "Date application was submitted or recorded (ISO format)"
+        },
+        "deadline": {
+          "type": "string",
+          "description": "Application deadline or expiration date"
+        },
+        "assessmentDeadline": {
+          "type": "string",
+          "description": "Technical or coding assessment deadline"
+        },
+        "interviewDate": {
+          "type": "string",
+          "description": "Scheduled interview date/time"
+        },
+        "followUpDate": {
+          "type": "string",
+          "description": "Target date for recruiter/hiring manager follow-up"
+        },
+        "matchScore": {
+          "type": "number",
+          "description": "Role match percentage score (0-100)"
+        },
+        "matchingSkills": {
+          "type": "list",
+          "description": "List of user skills matching the job requirements"
+        },
+        "missingSkills": {
+          "type": "list",
+          "description": "List of missing skills for the job"
+        },
+        "jobDescription": {
+          "type": "string",
+          "description": "Extracted or user-entered job description"
+        },
+        "salary": {
+          "type": "string",
+          "description": "Reported or expected compensation details"
+        },
+        "resumeId": {
+          "type": "string",
+          "description": "ID of resume used for this application"
+        },
+        "resumeFileName": {
+          "type": "string",
+          "description": "File or template name of the resume used"
+        },
+        "notes": {
+          "type": "list",
+          "description": "User notes with timestamps"
+        },
+        "contact": {
+          "type": "object",
+          "description": "Recruiter or hiring manager contact details"
+        },
+        "priority": {
+          "type": "string",
+          "description": "Application priority level: High, Medium, or Low"
+        },
+        "statusHistory": {
+          "type": "list",
+          "description": "Complete chronological status change audit trail with timestamps and notes"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp when record was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp when record was last updated"
+        }
+      }
+    },
+    "PortfolioProject": {
+      "path": "users/{userId}/portfolioProjects/{projectId}",
+      "description": "User portfolio project records with detailed problem, stack, role, outcomes, URLs, and AI optimizations.",
+      "fields": {
+        "projectId": { "type": "string", "description": "Unique project identifier" },
+        "userId": { "type": "string", "description": "Candidate owner UID" },
+        "name": { "type": "string", "description": "Project title or name" },
+        "description": { "type": "string", "description": "Primary project description" },
+        "problem": { "type": "string", "description": "Problem solved or business challenge" },
+        "technologies": { "type": "list", "description": "Technologies and libraries used" },
+        "role": { "type": "string", "description": "Candidate role on the project" },
+        "features": { "type": "list", "description": "Key functional features" },
+        "challenges": { "type": "string", "description": "Technical challenges encountered and solved" },
+        "outcome": { "type": "string", "description": "Quantified or qualitative project outcomes" },
+        "githubUrl": { "type": "string", "description": "Repository URL" },
+        "demoUrl": { "type": "string", "description": "Live production or demo URL" },
+        "imageUrls": { "type": "list", "description": "Project screenshots or demo preview images" },
+        "startDate": { "type": "string", "description": "Start date or month" },
+        "endDate": { "type": "string", "description": "Completion date or Present" },
+        "featured": { "type": "boolean", "description": "Whether project is highlighted on the portfolio hero/showcase" },
+        "displayOrder": { "type": "number", "description": "Sorting rank for portfolio display" },
+        "skills": { "type": "list", "description": "Skills demonstrated by this project" },
+        "targetRoles": { "type": "list", "description": "Target job roles this project supports" },
+        "aiAnalysis": { "type": "object", "description": "AI analysis with resume bullets, portfolio narrative, interview STAR answers" },
+        "createdAt": { "type": "string", "description": "Creation ISO timestamp" },
+        "updatedAt": { "type": "string", "description": "Last modified ISO timestamp" }
+      }
+    },
+    "PortfolioSettings": {
+      "path": "users/{userId}/portfolio/settings",
+      "description": "User portfolio configuration, chosen template, personal headline, bio, and publishing state.",
+      "fields": {
+        "template": { "type": "string", "description": "modern | minimal | developer | professional" },
+        "headline": { "type": "string", "description": "Professional headline" },
+        "about": { "type": "string", "description": "Expanded professional bio" },
+        "isPublic": { "type": "boolean", "description": "Whether public portfolio link is active" },
+        "publicId": { "type": "string", "description": "Custom or auto-generated public slug" },
+        "featuredProjectIds": { "type": "list", "description": "IDs of projects displayed in featured section" },
+        "customSectionsOrder": { "type": "list", "description": "Ordered section IDs" },
+        "updatedAt": { "type": "string", "description": "Last updated ISO timestamp" }
+      }
+    },
+    "GitHubAnalysis": {
+      "path": "users/{userId}/portfolio/github",
+      "description": "Cached public GitHub profile analysis, analyzed public repositories, metrics, and quality indicators.",
+      "fields": {
+        "username": { "type": "string", "description": "GitHub username extracted from profile" },
+        "profileUrl": { "type": "string", "description": "Public GitHub URL" },
+        "repositories": { "type": "list", "description": "List of authentic public repository metadata" },
+        "analyzedAt": { "type": "string", "description": "Timestamp of latest analysis" },
+        "analysisSummary": { "type": "object", "description": "Aggregated repository quality, languages, and recommendations" }
+      }
+    },
+    "PublicPortfolio": {
+      "path": "public_portfolios/{publicId}",
+      "description": "Sanitized, published portfolio viewable publicly without exposing private candidate data.",
+      "fields": {
+        "publicId": { "type": "string", "description": "Public portfolio slug" },
+        "userId": { "type": "string", "description": "Author UID" },
+        "profile": { "type": "object", "description": "Sanitized public profile info (name, headline, bio, college, links)" },
+        "settings": { "type": "object", "description": "Template and theme configuration" },
+        "projects": { "type": "list", "description": "Published project items" },
+        "skills": { "type": "list", "description": "Public verified skills" },
+        "publishedAt": { "type": "string", "description": "Publication timestamp" }
+      }
+    }
+  }
+}

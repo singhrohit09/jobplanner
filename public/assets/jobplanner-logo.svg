@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background / Ambient Glow Gradients -->
+    <radialGradient id="groundShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#60A5FA" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#93C5FD" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="swooshGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0080FF" />
+      <stop offset="50%" stop-color="#0066FF" />
+      <stop offset="100%" stop-color="#0047CC" />
+    </linearGradient>
+
+    <linearGradient id="calBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F1F5FB" />
+    </linearGradient>
+
+    <linearGradient id="calHeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F244C" />
+      <stop offset="50%" stop-color="#0A1938" />
+      <stop offset="100%" stop-color="#061229" />
+    </linearGradient>
+
+    <linearGradient id="binderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0A1836" />
+      <stop offset="40%" stop-color="#1B3568" />
+      <stop offset="70%" stop-color="#284E94" />
+      <stop offset="100%" stop-color="#0A1836" />
+    </linearGradient>
+
+    <linearGradient id="briefcaseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#11295A" />
+      <stop offset="40%" stop-color="#0B1E43" />
+      <stop offset="100%" stop-color="#07142E" />
+    </linearGradient>
+
+    <linearGradient id="briefcaseEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2A5499" />
+      <stop offset="100%" stop-color="#0F2856" />
+    </linearGradient>
+
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2575FC" />
+      <stop offset="50%" stop-color="#0D60E8" />
+      <stop offset="100%" stop-color="#004BD6" />
+    </linearGradient>
+
+    <linearGradient id="latchGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#BAE6FD" />
+      <stop offset="50%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="softShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0C234E" flood-opacity="0.22" />
+    </filter>
+
+    <filter id="badgeShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0047CC" flood-opacity="0.32" />
+    </filter>
+
+    <filter id="briefcaseShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#061229" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- 1. Ambient Bottom Glow / Ground Reflection -->
+  <ellipse cx="250" cy="405" rx="145" ry="22" fill="url(#groundShadow)" />
+
+  <!-- 2. Dynamic Circular Orbital Swooshes (Blue motion arcs) -->
+  <!-- Upper Right Swoosh Arc wrapping down to bottom right -->
+  <path d="M 225 45 C 340 45, 435 125, 440 240 C 445 320, 395 405, 335 435 C 365 410, 410 340, 405 250 C 400 170, 320 85, 225 45 Z"
+        fill="url(#swooshGrad)" opacity="0.95" />
+
+  <!-- Lower Left Swoosh Arc curving upward -->
+  <path d="M 45 285 C 42 220, 75 145, 130 95 C 95 140, 75 210, 85 285 C 95 355, 145 415, 210 442 C 160 435, 95 385, 65 330 C 50 305, 45 295, 45 285 Z"
+        fill="url(#swooshGrad)" opacity="0.95" />
+
+  <!-- 3. Calendar Base Card (Centered) -->
+  <g filter="url(#softShadow)">
+    <!-- Main Calendar Sheet with rounded corners -->
+    <rect x="90" y="90" width="285" height="255" rx="42" fill="url(#calBodyGrad)" stroke="#DBE4F0" stroke-width="3" />
+
+    <!-- Calendar Top Navy Header with rounded top -->
+    <path d="M 90 132 C 90 108.8, 108.8 90, 132 90 L 333 90 C 356.2 90, 375 108.8, 375 132 L 375 146 L 90 146 Z"
+          fill="url(#calHeaderGrad)" />
+    
+    <!-- Top Calendar Border Highlight Line -->
+    <path d="M 92 146 L 373 146" stroke="#1D3A6E" stroke-width="2" />
+  </g>
+
+  <!-- 4. Top Binder Loops / Rings -->
+  <!-- Left Binder Loop -->
+  <g filter="url(#softShadow)">
+    <rect x="155" y="65" width="30" height="62" rx="15" fill="url(#binderGrad)" stroke="#061229" stroke-width="3" />
+    <rect x="162" y="70" width="8" height="48" rx="4" fill="#5B87D1" opacity="0.45" />
+  </g>
+
+  <!-- Right Binder Loop -->
+  <g filter="url(#softShadow)">
+    <rect x="280" y="65" width="30" height="62" rx="15" fill="url(#binderGrad)" stroke="#061229" stroke-width="3" />
+    <rect x="287" y="70" width="8" height="48" rx="4" fill="#5B87D1" opacity="0.45" />
+  </g>
+
+  <!-- 5. Calendar Grid Date Cells (Columns x Rows) -->
+  <!-- Row 1 -->
+  <rect x="135" y="170" width="36" height="36" rx="8" fill="#1C386A" />
+  <rect x="189" y="170" width="36" height="36" rx="8" fill="#005BEA" />
+  <rect x="243" y="170" width="36" height="36" rx="8" fill="#DCE5F2" />
+  <rect x="295" y="170" width="36" height="36" rx="8" fill="#DCE5F2" />
+
+  <!-- Row 2 -->
+  <rect x="135" y="220" width="36" height="36" rx="8" fill="#294A80" />
+  <!-- Active Checked Date Box -->
+  <rect x="189" y="220" width="36" height="36" rx="8" fill="#0066FF" />
+  <path d="M 197 238 L 204 246 L 217 230" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+
+  <rect x="243" y="220" width="36" height="36" rx="8" fill="#DCE5F2" />
+
+  <!-- Row 3 (Light boxes partially visible) -->
+  <rect x="135" y="270" width="36" height="36" rx="8" fill="#DCE5F2" />
+
+  <!-- 6. Professional Briefcase (Foreground) -->
+  <g filter="url(#briefcaseShadow)">
+    <!-- Briefcase Handle -->
+    <path d="M 235 278 L 235 252 C 235 240, 246 230, 260 230 L 290 230 C 304 230, 315 240, 315 252 L 315 278"
+          fill="none" stroke="#0A1836" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 235 278 L 235 252 C 235 242, 246 233, 260 233 L 290 233 C 304 233, 315 242, 315 252 L 315 278"
+          fill="none" stroke="url(#briefcaseEdge)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Briefcase Main Body -->
+    <rect x="188" y="278" width="184" height="130" rx="26" fill="url(#briefcaseGrad)" stroke="#091A3A" stroke-width="3.5" />
+
+    <!-- Briefcase Top Flap Seam Line with Crisp White/Blue Trim -->
+    <path d="M 188 330 Q 280 348 372 330" fill="none" stroke="#E2EDFC" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Central Buckle / Latch Base -->
+    <rect x="260" y="328" width="36" height="36" rx="10" fill="#FFFFFF" stroke="#D1E2F6" stroke-width="2.5" />
+    <!-- Inner Glowing Blue Buckle Core -->
+    <rect x="265" y="333" width="26" height="26" rx="7" fill="url(#latchGrad)" />
+    <rect x="268" y="335" width="20" height="9" rx="4.5" fill="#FFFFFF" opacity="0.65" />
+  </g>
+
+  <!-- 7. Verified Checkmark Circle Badge (Right Side) -->
+  <g filter="url(#badgeShadow)">
+    <!-- Vibrant Blue Circular Badge with White Border -->
+    <circle cx="378" cy="232" r="54" fill="url(#badgeGrad)" stroke="#FFFFFF" stroke-width="5" />
+
+    <!-- Inner Radial Glow Accent -->
+    <circle cx="366" cy="218" r="28" fill="#FFFFFF" opacity="0.16" />
+
+    <!-- Bold Sharp White Checkmark inside Badge -->
+    <path d="M 350 236 L 368 255 L 406 213"
+          fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

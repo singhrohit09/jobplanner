@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="favBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E2756" />
+      <stop offset="100%" stop-color="#06132D" />
+    </linearGradient>
+    <linearGradient id="favSwoosh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#0066FF" />
+      <stop offset="100%" stop-color="#0047CC" />
+    </linearGradient>
+    <linearGradient id="favBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#0052CC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base rounded icon background -->
+  <rect x="4" y="4" width="112" height="112" rx="28" fill="url(#favBg)" />
+  <rect x="4" y="4" width="112" height="112" rx="28" fill="none" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1.5" />
+
+  <!-- Dynamic Blue Swoosh Arc -->
+  <path d="M 55 14 C 82 14, 104 34, 106 62 C 107 78, 98 94, 84 102 C 92 95, 100 82, 98 64 C 96 42, 78 22, 55 14 Z"
+        fill="url(#favSwoosh)" />
+
+  <!-- Calendar Base -->
+  <rect x="22" y="24" width="66" height="60" rx="12" fill="#FFFFFF" />
+  <!-- Calendar Header -->
+  <path d="M 22 34 C 22 28.5, 26.5 24, 32 24 L 78 24 C 83.5 24, 88 28.5, 88 34 L 88 38 L 22 38 Z" fill="#0E2756" />
+
+  <!-- Top Rings -->
+  <rect x="36" y="18" width="8" height="14" rx="4" fill="#0E2756" />
+  <rect x="66" y="18" width="8" height="14" rx="4" fill="#0E2756" />
+
+  <!-- Calendar Grid Boxes -->
+  <rect x="30" y="44" width="9" height="9" rx="2.5" fill="#1E3A8A" />
+  <rect x="43" y="44" width="9" height="9" rx="2.5" fill="#0066FF" />
+  <rect x="56" y="44" width="9" height="9" rx="2.5" fill="#DCE5F2" />
+  <rect x="69" y="44" width="9" height="9" rx="2.5" fill="#DCE5F2" />
+
+  <rect x="30" y="56" width="9" height="9" rx="2.5" fill="#2563EB" />
+  <rect x="43" y="56" width="9" height="9" rx="2.5" fill="#0066FF" />
+  <path d="M 45 60.5 L 47 62.5 L 50 58.5" fill="none" stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Foreground Briefcase -->
+  <!-- Briefcase Handle -->
+  <path d="M 52 70 L 52 64 C 52 61, 55 58, 58 58 L 66 58 C 69 58, 72 61, 72 64 L 72 70"
+        fill="none" stroke="#07142E" stroke-width="5" stroke-linecap="round" />
+  <!-- Briefcase Body -->
+  <rect x="42" y="70" width="46" height="34" rx="8" fill="#0B1E43" stroke="#1D3A6E" stroke-width="1.2" />
+  <path d="M 42 82 Q 65 87 88 82" fill="none" stroke="#E2EDFC" stroke-width="1.5" />
+  <!-- Latch -->
+  <rect x="61" y="81" width="8" height="8" rx="2" fill="#FFFFFF" />
+  <rect x="62.5" y="82.5" width="5" height="5" rx="1.2" fill="#38BDF8" />
+
+  <!-- Verified Checkmark Badge -->
+  <circle cx="89" cy="62" r="16" fill="url(#favBadge)" stroke="#FFFFFF" stroke-width="2" />
+  <path d="M 82 62.5 L 87 67.5 L 96 57.5" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

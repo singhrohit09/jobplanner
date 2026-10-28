@@ -1,0 +1,6 @@
+{
+  "name": "JobPlanner",
+  "description": "Learn. Prepare. Get Hired. Web-based career guidance and job preparation platform for students, freshers, and job seekers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
