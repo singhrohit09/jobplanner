@@ -4789,6 +4789,162 @@ RULES:
   }
 });
 
+/**
+ * Offer Evaluation & Salary Negotiation API:
+ * Evaluates candidate offers, competing offers, and benchmarks to generate personalized negotiation scripts,
+ * counter-offer ranges, verbal talking points, and contingency levers.
+ */
+app.post("/api/ai/offers/evaluate-and-negotiate", async (req, res) => {
+  try {
+    const {
+      offer,
+      competingOffers = [],
+      userTargetRole = "Software Engineer",
+      userSkills = [],
+      readinessScore = 75,
+      negotiationGoal = "competing_offer",
+      tone = "diplomatic_enthusiastic",
+      targetBaseSalary,
+      additionalRequests,
+    } = req.body;
+
+    if (!offer || !offer.company) {
+      return res.status(400).json({ error: "Job offer details are required." });
+    }
+
+    const currentBase = Number(offer.baseSalary) || 750000;
+    const currency = offer.currency || "₹";
+    const targetBase = targetBaseSalary && Number(targetBaseSalary) > currentBase
+      ? Number(targetBaseSalary)
+      : Math.round(currentBase * 1.15);
+
+    const formatCurrency = (val: number) => {
+      if (currency === "₹") {
+        return val >= 100000 ? `₹${(val / 100000).toFixed(1)} LPA` : `₹${val.toLocaleString("en-IN")}`;
+      }
+      return `${currency}${val.toLocaleString("en-US")}`;
+    };
+
+    const fallbackResponse = {
+      emailSubject: `Re: Offer Discussion – ${offer.roleTitle || "Role"} at ${offer.company} – [Your Name]`,
+      emailBody: `Dear Hiring Team,\n\nThank you very much for offering me the ${offer.roleTitle || "Role"} position at ${offer.company}. I am genuinely excited about the team's product roadmap and the opportunity to make an immediate impact.\n\nAfter reviewing the details of the offer (${formatCurrency(currentBase)}), and considering market benchmarks alongside my technical readiness in ${(userSkills || []).slice(0, 3).join(", ") || "the relevant tech stack"}, I was hoping we could discuss adjusting the base compensation to ${formatCurrency(targetBase)}.\n\nClosing this adjustment would allow me to accept immediately with full confidence. I look forward to your thoughts and appreciate your partnership throughout the interview process.\n\nWarm regards,\n[Your Name]`,
+      keyTalkingPoints: [
+        `Reiterate strong enthusiasm: Emphasize that ${offer.company} is your top priority.`,
+        `Anchor on demonstrated outcomes, portfolio projects, and readiness score (${readinessScore}/100).`,
+        `Express willingness to accept and sign immediately if the target base of ${formatCurrency(targetBase)} is met.`,
+      ],
+      counterOfferBreakdown: {
+        suggestedBaseRange: `${formatCurrency(Math.round(currentBase * 1.1))} – ${formatCurrency(Math.round(currentBase * 1.2))}`,
+        suggestedSigningBonusRange: formatCurrency(Math.round(currentBase * 0.08)),
+        suggestedEquityRange: offer.equityTotalValue > 0 ? formatCurrency(Math.round(offer.equityTotalValue * 1.2)) : undefined,
+      },
+      fallbacksIfDenied: [
+        "Request an early 6-month performance review cycle tied to compensation milestones.",
+        `Ask for an increased signing bonus (${formatCurrency(Math.round(currentBase * 0.08))}) to bridge Year 1 total cash.`,
+        "Request allocated annual educational budget and home office flexibility.",
+      ],
+      negotiationTips: [
+        "Never negotiate before having a formal written offer letter.",
+        "Maintain a collaborative, problem-solving partnership tone with the recruiter.",
+        "Focus on future business value delivered rather than personal expense justifications.",
+        "Be ready to sign promptly once reasonable concessions are reached.",
+      ],
+    };
+
+    const ai = getGeminiClient();
+    if (!ai) {
+      return res.json(fallbackResponse);
+    }
+
+    const competingSummary = Array.isArray(competingOffers) && competingOffers.length > 0
+      ? competingOffers.map((o: any) => `${o.company} offering ${formatCurrency(Number(o.baseSalary) || 0)}`).join("; ")
+      : "None stated";
+
+    const prompt = `You are JobPlanner's Executive Compensation & Career Negotiation Coach.
+Generate an actionable, respectful, and high-converting salary negotiation script and counter-offer package for a job candidate.
+
+OFFER CONTEXT:
+- Company: ${offer.company}
+- Role: ${offer.roleTitle || userTargetRole}
+- Location: ${offer.location || "Remote"} (${offer.workMode || "Hybrid"})
+- Current Base Salary: ${formatCurrency(currentBase)}
+- Signing Bonus: ${formatCurrency(Number(offer.signingBonus) || 0)}
+- Annual Bonus Target: ${offer.annualBonusPercent || 10}%
+- Equity / RSUs: ${formatCurrency(Number(offer.equityTotalValue) || 0)} (${offer.vestingSchedule || "Standard 4-Year"})
+- Benefits Annual Value: ${formatCurrency(Number(offer.benefitsAnnualValue) || 0)}
+- Cost of Living: ${offer.costOfLivingTier || "Tier 1 Metro"}
+- Target Counter-Offer Base: ${formatCurrency(targetBase)}
+- Competing Offers: ${competingSummary}
+
+CANDIDATE CONTEXT:
+- Target Role: ${userTargetRole}
+- Verified Skills: ${(userSkills || []).slice(0, 5).join(", ")}
+- Career Readiness Score: ${readinessScore}/100
+- Strategy Goal: ${negotiationGoal}
+- Requested Tone: ${tone}
+- Additional Candidate Request: ${additionalRequests || "Standard counter-offer discussion"}
+
+RULES:
+1. Write a polished, professional email that the candidate can copy and send directly.
+2. Provide 3-4 concise, punchy verbal talking points for a live phone discussion.
+3. Suggest clear counter-offer figures and contingency fallbacks if the hiring manager states budget is fixed.
+4. Output STRICT JSON conforming to this schema:
+{
+  "emailSubject": "string",
+  "emailBody": "string",
+  "keyTalkingPoints": ["string"],
+  "counterOfferBreakdown": {
+    "suggestedBaseRange": "string",
+    "suggestedSigningBonusRange": "string",
+    "suggestedEquityRange": "string"
+  },
+  "fallbacksIfDenied": ["string"],
+  "negotiationTips": ["string"]
+}`;
+
+    const aiRes = await generateContentWithFallback(ai, {
+      model: "gemini-3.8-flash",
+      contents: prompt,
+      config: { responseMimeType: "application/json" },
+    });
+
+    const parsed = JSON.parse(aiRes.text || "{}");
+    if (!parsed.emailBody || !parsed.emailSubject) {
+      return res.json(fallbackResponse);
+    }
+
+    res.json({
+      ...parsed,
+      generatedAt: new Date().toISOString(),
+    });
+  } catch (err: any) {
+    console.warn("Notice: AI Offer Negotiation fallback used:", err?.message || err);
+    res.json({
+      emailSubject: "Re: Offer Discussion – [Your Name]",
+      emailBody: "Dear Hiring Team,\n\nThank you for the opportunity to join the team. I have reviewed the offer details with excitement. Given market benchmarks and my technical preparation, I would like to explore bridging the compensation package. I look forward to speaking soon.\n\nWarm regards,\n[Your Name]",
+      keyTalkingPoints: [
+        "Reiterate enthusiastic alignment with the team mission.",
+        "Emphasize technical domain readiness and low ramp-up time.",
+        "Ask collaboratively for counter-offer consideration.",
+      ],
+      counterOfferBreakdown: {
+        suggestedBaseRange: "10-15% above current offer",
+        suggestedSigningBonusRange: "One-time signing bonus bridge",
+      },
+      fallbacksIfDenied: [
+        "Accelerated 6-month review cycle",
+        "Sign-on bonus",
+        "Remote flexibility",
+      ],
+      negotiationTips: [
+        "Keep the conversation collaborative and respectful.",
+        "Summarize phone agreements in writing via email.",
+      ],
+      generatedAt: new Date().toISOString(),
+    });
+  }
+});
+
 // ============================================================================
 // PHASE 11: AI PORTFOLIO BUILDER & GITHUB ANALYZER API ROUTES
 // ============================================================================

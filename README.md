@@ -138,6 +138,13 @@ Entering the modern tech job market presents several steep hurdles for job seeke
 - **Supabase Support**: Configurable alternate backend persistence.
 - **Defensive LocalStorage**: Seamless fallback ensuring full functionality even when cloud services are disconnected.
 
+### 11. Offer Comparison & Salary Negotiation Calculator
+- **Multi-Offer Total Compensation Breakdown**: Models and compares multiple job offers side-by-side across Base Salary, Signing Bonus, Performance Bonus %, Equity / RSUs, and Benefits.
+- **4-Year Vesting & Cash Flow Projections**: Accurately projects Year 1 through Year 4 cumulative values across Standard 4-Year (25%/yr with 1-year cliff), Backloaded (5/15/40/40), and 3-Year vesting schedules, plus estimated monthly in-hand net cash flow.
+- **Cost-of-Living Purchasing Power Simulator**: Normalizes nominal salary offers across Tier 1 Metros, Tier 2 Urban cities, and Remote work setups to evaluate real purchasing power.
+- **Role Compensation Benchmarking**: Automatically compares offer base salaries against industry entry and median standards for the candidate's target role.
+- **AI Salary Negotiation Coach & Script Generator**: Generates tailored, high-converting counter-offer emails, phone conversation talking points, fallback concessions (e.g. 6-month review, sign-on bonus), and freshman negotiation rules via Google Gemini (`/api/ai/offers/evaluate-and-negotiate`) with robust offline heuristic fallback.
+
 ---
 
 ## Planned Features and Future Enhancements
@@ -148,7 +155,7 @@ The following features represent the project roadmap and are not yet fully imple
 - [ ] **Automated LinkedIn Profile Sync**: Browser extension or OAuth integration to import work experiences and recommendations directly.
 - [ ] **One-Click Application Autofill**: Browser companion to autofill job applications on Greenhouse, Lever, and Workday.
 - [ ] **Peer-to-Peer Mock Interviews**: Live WebRTC rooms for collaborative coding and peer interview practice.
-- [ ] **Offer Comparison & Salary Negotiation Calculator**: Cost-of-living adjustments, equity vesting schedules, and compensation benchmarking.
+- [x] **Offer Comparison & Salary Negotiation Calculator**: Cost-of-living adjustments, equity vesting schedules, compensation benchmarking, and AI counter-offer generation.
 
 ---
 
@@ -247,6 +254,7 @@ JOBPLANNER/
 │   │   ├── LoginPage.tsx              # Standalone landing and authentication page
 │   │   ├── Logo.tsx                   # Brand logo component
 │   │   ├── Navbar.tsx                 # Top navigation and profile controls
+│   │   ├── OfferCalculatorModal.tsx   # Side-by-side offer comparison & AI salary negotiation modal
 │   │   ├── OnboardingModal.tsx        # Profile setup modal
 │   │   ├── OnboardingPage.tsx         # Comprehensive student onboarding wizard
 │   │   ├── ReadinessView.tsx          # Readiness score breakdown details
@@ -259,6 +267,7 @@ JOBPLANNER/
 │   │   ├── analyticsCalculator.ts     # Readiness and progress calculation algorithms
 │   │   ├── defaultData.ts             # Pre-seeded role benchmarks, skills & mock data
 │   │   ├── firebase.ts                # Firebase client SDK initialization & Firestore methods
+│   │   ├── offerCalculator.ts         # Total compensation formulas, vesting schedules & negotiation heuristics
 │   │   ├── portfolioUtils.ts          # Portfolio readiness algorithms
 │   │   ├── resumeExport.ts            # Client-side PDF, DOC, and TXT exporters
 │   │   └── supabase.ts                # Supabase client initialization

@@ -33,8 +33,11 @@ import {
   LayoutGrid,
   List as ListIcon,
   HelpCircle,
+  Calculator,
+  Scale,
 } from "lucide-react";
 import { User as FirebaseUser } from "firebase/auth";
+import { OfferCalculatorModal } from "./OfferCalculatorModal";
 import {
   JobApplication,
   JobApplicationStatus,
@@ -168,6 +171,10 @@ export const JobApplicationsView: React.FC<JobApplicationsViewProps> = ({
   const [isStrategyModalOpen, setIsStrategyModalOpen] = useState(false);
   const [strategyReport, setStrategyReport] = useState<any | null>(null);
   const [isLoadingStrategy, setIsLoadingStrategy] = useState(false);
+
+  // Offer Calculator
+  const [isOfferCalculatorOpen, setIsOfferCalculatorOpen] = useState(false);
+  const [offerCalculatorApp, setOfferCalculatorApp] = useState<JobApplication | null>(null);
 
   // Status note modal
   const [statusChangeTarget, setStatusChangeTarget] = useState<{
@@ -521,6 +528,22 @@ export const JobApplicationsView: React.FC<JobApplicationsViewProps> = ({
 
         <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
           <button
+            onClick={() => {
+              setOfferCalculatorApp(null);
+              setIsOfferCalculatorOpen(true);
+            }}
+            className="px-4 py-2.5 rounded-xl bg-[#FAF8F5] hover:bg-[#F0ECE4] text-stone-800 text-xs font-semibold border border-[#DED7CD] transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+          >
+            <Calculator className="w-4 h-4 text-[#C85A32]" />
+            <span>Offer & Salary Calculator</span>
+            {stats.offers > 0 && (
+              <span className="ml-0.5 px-1.5 py-0.2 rounded-full bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-bold border border-[#C8E6C9]">
+                {stats.offers}
+              </span>
+            )}
+          </button>
+
+          <button
             onClick={handleOpenStrategy}
             className="px-4 py-2.5 rounded-xl bg-[#FAF8F5] hover:bg-[#F0ECE4] text-stone-800 text-xs font-semibold border border-[#DED7CD] transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
           >
@@ -579,9 +602,17 @@ export const JobApplicationsView: React.FC<JobApplicationsViewProps> = ({
           </div>
         </div>
 
-        <div className="p-3.5 rounded-2xl bg-[#FFFFFF] border border-[#E7E2DA] shadow-2xs">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400">
-            Offers Made
+        <div
+          onClick={() => {
+            setOfferCalculatorApp(null);
+            setIsOfferCalculatorOpen(true);
+          }}
+          className="p-3.5 rounded-2xl bg-[#FFFFFF] border border-[#E7E2DA] shadow-2xs cursor-pointer hover:border-[#C85A32]/40 transition-colors group"
+          title="Open Offer & Salary Calculator"
+        >
+          <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 group-hover:text-[#C85A32] transition-colors flex items-center justify-between">
+            <span>Offers Made</span>
+            <Calculator className="w-3 h-3 text-[#C85A32] opacity-0 group-hover:opacity-100 transition-opacity" />
           </span>
           <div className="mt-1 flex items-baseline gap-1.5">
             <span className="text-2xl font-bold text-[#059669] font-editorial">
@@ -1291,6 +1322,17 @@ export const JobApplicationsView: React.FC<JobApplicationsViewProps> = ({
                   <span>Check Skill Gaps</span>
                 </button>
 
+                <button
+                  onClick={() => {
+                    setOfferCalculatorApp(selectedApplication);
+                    setIsOfferCalculatorOpen(true);
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-[#FAF0EB] hover:bg-[#F2DECA] text-[#A64522] text-xs font-bold border border-[#F2DECA] transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Scale className="w-3.5 h-3.5 text-[#C85A32]" />
+                  <span>Evaluate & Negotiate Offer</span>
+                </button>
+
                 {selectedApplication.jobUrl && (
                   <a
                     href={selectedApplication.jobUrl}
@@ -1561,6 +1603,19 @@ export const JobApplicationsView: React.FC<JobApplicationsViewProps> = ({
           </div>
         </div>
       )}
+
+      {/* Offer Comparison & Salary Negotiation Calculator Modal */}
+      <OfferCalculatorModal
+        isOpen={isOfferCalculatorOpen}
+        onClose={() => {
+          setIsOfferCalculatorOpen(false);
+          setOfferCalculatorApp(null);
+        }}
+        applications={applications}
+        profile={profile}
+        careerReadinessScore={careerReadinessScore}
+        initialSelectedApp={offerCalculatorApp}
+      />
     </div>
   );
 };

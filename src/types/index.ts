@@ -1219,5 +1219,90 @@ export interface PublicPortfolioData {
   publishedAt: string;
 }
 
+// ==========================================
+// Offer Comparison & Salary Negotiation Types
+// ==========================================
 
+export type VestingScheduleType =
+  | "Standard 4-Year (25%/yr, 1-yr cliff)"
+  | "Backloaded (5/15/40/40)"
+  | "Equal 3-Year"
+  | "Immediate / None";
 
+export type CostOfLivingTier =
+  | "Metro Tier 1 (High CoL)"
+  | "Urban Tier 2 (Moderate CoL)"
+  | "Tier 3 / Remote (Low CoL)";
+
+export interface JobOffer {
+  id: string;
+  applicationId?: string;
+  company: string;
+  roleTitle: string;
+  location: string;
+  workMode: "Remote" | "Hybrid" | "Onsite";
+  currency: string;
+  baseSalary: number;
+  signingBonus: number;
+  annualBonusPercent: number;
+  equityTotalValue: number;
+  vestingSchedule: VestingScheduleType;
+  benefitsAnnualValue: number;
+  costOfLivingTier: CostOfLivingTier;
+  offerDeadline?: string;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface OfferBreakdownCalculation {
+  offer: JobOffer;
+  year1Cash: number;
+  year1Equity: number;
+  year1TotalComp: number;
+  annualizedTotalComp: number;
+  fourYearTotalValue: number;
+  monthlyEstimatedCash: number;
+  colAdjustedAnnualComp: number;
+  benchmarkComparison: {
+    status: "Below Market" | "Competitive Median" | "Top Tier";
+    percentileEstimate: number;
+    message: string;
+  };
+}
+
+export type NegotiationGoalType =
+  | "competing_offer"
+  | "skills_and_merit"
+  | "higher_base"
+  | "higher_bonus_or_equity"
+  | "remote_flexibility";
+
+export type NegotiationToneType =
+  | "diplomatic_enthusiastic"
+  | "confident_value"
+  | "direct_corporate";
+
+export interface OfferNegotiationRequest {
+  offer: JobOffer;
+  competingOffers?: JobOffer[];
+  userTargetRole?: string;
+  userSkills?: string[];
+  readinessScore?: number;
+  negotiationGoal: NegotiationGoalType;
+  tone: NegotiationToneType;
+  targetBaseSalary?: number;
+  additionalRequests?: string;
+}
+
+export interface OfferNegotiationResult {
+  emailSubject: string;
+  emailBody: string;
+  keyTalkingPoints: string[];
+  counterOfferBreakdown: {
+    suggestedBaseRange: string;
+    suggestedSigningBonusRange?: string;
+    suggestedEquityRange?: string;
+  };
+  fallbacksIfDenied: string[];
+  negotiationTips: string[];
+}
